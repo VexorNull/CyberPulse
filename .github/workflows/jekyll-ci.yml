@@ -1,0 +1,48 @@
+# ====================================================================
+# Project: CyberPulse
+# Author: Tanveer Hussain (@VexorNull)
+# Description: SLSA Provenance Generator for CyberPulse Security Build
+# ====================================================================
+
+name: CyberPulse SLSA Provenance
+on:
+  workflow_dispatch:
+  release:
+    types: [created]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      digests: ${{ steps.hash.outputs.digests }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # Step 1: Prepare Website Artifacts
+      - name: Prepare CyberPulse Artifacts
+        run: |
+          echo "Packaging CyberPulse static files by Tanveer Hussain (@VexorNull)..."
+          tar -czvf cyberpulse-build.tar.gz index.html
+
+      # Step 2: Generate Cryptographic Hashes (SHA256)
+      - name: Generate Subject Hashes for Provenance
+        id: hash
+        run: |
+          set -euo pipefail
+          # Target the created CyberPulse bundle
+          files=$(ls cyberpulse-build.tar.gz)
+          # Generate base64 encoded digests for SLSA Generator
+          echo "digests=$(sha256sum $files | base64 -w0)" >> "${GITHUB_OUTPUT}"
+
+  provenance:
+    needs: [build]
+    permissions:
+      actions: read   # Required to read workflow metadata
+      id-token: write # Required to sign the SLSA provenance
+      contents: write # Required to upload provenance to Release assets
+    uses: slsa-framework/slsa-github-generator/.github/workflows/generator_generic_slsa3.yml@v2.0.0
+    with:
+      base64-subjects: "${{ needs.build.outputs.digests }}"
+      upload-assets: true # Release assets me automatically attach ho jayega
