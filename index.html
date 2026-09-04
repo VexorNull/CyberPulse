@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tanveer Hussain | VexorNull Protocol</title>
+    
+    <!-- Meta Credits -->
+    <meta name="author" content="Tanveer Hussain">
+    <meta name="designer" content="@VexorNull">
+    <meta name="credit" content="Designed & Developed by Tanveer Hussain (@VexorNull)">
+
+    <style>
+        :root {
+            --bg-color: #030712;
+            --accent-cyan: #06b6d4;
+            --accent-glow: #00f0ff;
+            --text-main: #f3f4f6;
+            --text-muted: #6b7280;
+            --panel-bg: rgba(15, 23, 42, 0.75);
+            --border-glow: rgba(6, 182, 212, 0.3);
+            --font-mono: 'Courier New', Courier, monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Ambient Animated Grid Background */
+        .bg-grid {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background-image: 
+                linear-gradient(to right, rgba(6, 182, 212, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(6, 182, 212, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+            transform: rotate(15deg);
+            z-index: 0;
+            pointer-events: none;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: rotate(15deg) translateY(0); }
+            100% { transform: rotate(15deg) translateY(40px); }
+        }
+
+        /* Glowing Center Radial */
+        .glow-overlay {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(6, 182, 212, 0.15) 0%, rgba(3, 7, 18, 0) 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Main Container */
+        .container {
+            position: relative;
+            z-index: 2;
+            width: 90%;
+            max-width: 900px;
+            margin-top: 50px;
+            margin-bottom: 50px;
+        }
+
+        /* Glassmorphism Sci-Fi Card */
+        .terminal-card {
+            background: var(--panel-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-glow);
+            border-radius: 12px;
+            box-shadow: 0 0 30px rgba(6, 182, 212, 0.15);
+            overflow: hidden;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .terminal-card:hover {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 40px rgba(6, 182, 212, 0.25);
+        }
+
+        /* Card Header */
+        .card-header {
+            background: rgba(2, 6, 23, 0.8);
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-glow);
+        }
+
+        .dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .dot-red { background: #ef4444; }
+        .dot-yellow { background: #eab308; }
+        .dot-green { background: #22c55e; }
+
+        .system-status {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--accent-cyan);
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            background: var(--accent-cyan);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--accent-glow);
+            animation: pulse 1.5s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+
+        /* Card Body */
+        .card-body {
+            padding: 40px;
+        }
+
+        .headline {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        .headline span {
+            color: var(--accent-cyan);
+            text-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
+        }
+
+        .typing-text {
+            font-family: var(--font-mono);
+            color: var(--accent-cyan);
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            min-height: 1.5em;
+        }
+
+        .description {
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            max-width: 700px;
+        }
+
+        /* Interactive Action Buttons */
+        .action-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: var(--accent-cyan);
+            color: #000;
+            font-weight: 700;
+            padding: 12px 28px;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.4);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-glow);
+            box-shadow: 0 0 25px rgba(0, 240, 255, 0.7);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-main);
+            font-weight: 600;
+            padding: 12px 28px;
+            border-radius: 6px;
+            text-decoration: none;
+            border: 1px solid var(--border-glow);
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+            transform: translateY(-2px);
+        }
+
+        /* Footer Credit Section */
+        footer {
+            position: relative;
+            z-index: 2;
+            padding: 20px;
+            text-align: center;
+            font-family: var(--font-mono);
+            font-size: 13px;
+            color: var(--text-muted);
+            width: 100%;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(3, 7, 18, 0.9);
+        }
+
+        .credit-link {
+            color: var(--accent-cyan);
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.2s ease, text-shadow 0.2s ease;
+        }
+
+        .credit-link:hover {
+            color: var(--accent-glow);
+            text-shadow: 0 0 8px var(--accent-glow);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 640px) {
+            .headline { font-size: 1.8rem; }
+            .card-body { padding: 25px; }
+            .action-group { flex-direction: column; }
+            .btn-primary, .btn-secondary { text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-grid"></div>
+    <div class="glow-overlay"></div>
+
+    <main class="container">
+        <div class="terminal-card">
+            <div class="card-header">
+                <div class="dots">
+                    <div class="dot dot-red"></div>
+                    <div class="dot dot-yellow"></div>
+                    <div class="dot dot-green"></div>
+                </div>
+                <div class="system-status">
+                    <span class="status-indicator"></span>
+                    SYSTEM ONLINE // NODE: VEXOR-01
+                </div>
+            </div>
+            
+            <div class="card-body">
+                <h1 class="headline">Welcome to <span>VexorNull</span> Space</h1>
+                <div class="typing-text" id="typewriter"></div>
+                
+                <p class="description">
+                    Next-generation digital experiences crafted with high performance, sleek UI elements, and modern web architectures. Designed to set new standards in visual layout and functionality.
+                </p>
+
+                <div class="action-group">
+                    <a href="#projects" class="btn-primary">Explore Projects</a>
+                    <a href="#contact" class="btn-secondary">Initiate Contact</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer with Explicit Credits -->
+    <footer>
+        <p>Design & Architecture Created by <a href="https://github.com/VexorNull" class="credit-link">Tanveer Hussain @VexorNull</a></p>
+    </footer>
+
+    <!-- Interactive Script -->
+    <script>
+        const textElement = document.getElementById('typewriter');
+        const phrases = [
+            "> Initializing custom protocol...",
+            "> Building futuristic web interfaces...",
+            "> Powered by Tanveer Hussain...",
+            "> Status: Ready for deployment."
+        ];
+        
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+
+        function typeEffect() {
+            const currentPhrase = phrases[phraseIndex];
+            
+            if (isDeleting) {
+                textElement.textContent = currentPhrase.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                textElement.textContent = currentPhrase.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let typeSpeed = isDeleting ? 40 : 80;
+
+            if (!isDeleting && charIndex === currentPhrase.length) {
+                typeSpeed = 2000; // Pause at end of sentence
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+                typeSpeed = 500;
+            }
+
+            setTimeout(typeEffect, typeSpeed);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            typeEffect();
+        });
+    </script>
+</body>
+</html>
