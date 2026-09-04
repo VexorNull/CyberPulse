@@ -3,36 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CyberPulse | Tanveer Hussain @VexorNull</title>
+    <title>CyberPulse v3.0 // Tanveer Hussain @VexorNull Protocol</title>
     
-    <!-- Author & Credit Metadata -->
     <meta name="author" content="Tanveer Hussain">
+    <meta name="copyright" content="Tanveer Hussain (@VexorNull)">
     <meta name="designer" content="@VexorNull">
-    <meta name="credit" content="Designed & Developed by Tanveer Hussain (@VexorNull)">
+    <meta name="credit" content="Architected & Engineered by Tanveer Hussain (@VexorNull)">
+    <meta name="description" content="CyberPulse: A high-performance, interactive cyberpunk terminal portfolio. Designed by @VexorNull.">
 
     <style>
         :root {
-            --bg-color: #020617;
-            --accent-cyan: #06b6d4;
-            --accent-glow: #00f0ff;
-            --accent-pink: #f43f5e;
-            --text-main: #f8fafc;
+            --bg-deep: #010409;
+            --cyber-cyan: #06b6d4;
+            --cyber-cyan-glow: rgba(6, 182, 212, 0.6);
+            --cyber-pink: #f43f5e;
+            --cyber-green: #00ff41;
+            --text-main: #e2e8f0;
             --text-muted: #94a3b8;
-            --panel-bg: rgba(15, 23, 42, 0.85);
-            --border-glow: rgba(6, 182, 212, 0.4);
+            --panel-glass: rgba(10, 15, 25, 0.9);
+            --border-std: 1px solid rgba(6, 182, 212, 0.4);
+            --border-hover: 1px solid rgba(0, 240, 255, 0.8);
             --font-mono: 'Fira Code', 'Courier New', Courier, monospace;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background-color: var(--bg-color);
+            background-color: var(--bg-deep);
             color: var(--text-main);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', system-ui, sans-serif;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -42,535 +41,459 @@
             position: relative;
         }
 
-        /* Interactive Particle Background */
-        #particle-canvas {
+        /* Upgrade 2: Matrix Digital Rain Background */
+        #matrix-canvas {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             z-index: 0;
             pointer-events: none;
+            opacity: 0.15;
         }
 
-        /* Scanline Overlay for Sci-Fi CRT Effect */
+        /* Ambient Glow & Scanlines */
         .scanlines {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: linear-gradient(
-                rgba(18, 16, 16, 0) 50%, 
-                rgba(0, 0, 0, 0.25) 50%
-            );
-            background-size: 100% 4px;
-            z-index: 1;
-            pointer-events: none;
-            opacity: 0.6;
-        }
-
-        /* Ambient Animated Grid Background */
-        .bg-grid {
-            position: fixed;
-            width: 200%;
-            height: 200%;
-            top: -50%;
-            left: -50%;
-            background-image: 
-                linear-gradient(to right, rgba(6, 182, 212, 0.05) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(6, 182, 212, 0.05) 1px, transparent 1px);
-            background-size: 50px 50px;
-            transform: rotate(15deg);
-            z-index: 0;
-            pointer-events: none;
-            animation: gridMove 25s linear infinite;
-        }
-
-        @keyframes gridMove {
-            0% { transform: rotate(15deg) translateY(0); }
-            100% { transform: rotate(15deg) translateY(50px); }
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: linear-gradient(rgba(18,16,16,0) 50%, rgba(0,0,0,0.2) 50%);
+            background-size: 100% 3px;
+            z-index: 1; pointer-events: none; opacity: 0.8;
         }
 
         /* Main Glass Container */
         .container {
             position: relative;
             z-index: 2;
-            width: 92%;
-            max-width: 950px;
-            margin: 40px 0;
+            width: 94%;
+            max-width: 980px;
+            margin: 50px 0;
         }
 
-        .terminal-card {
-            background: var(--panel-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--border-glow);
+        /* Terminal Card (Glassmorphic) */
+        .cyber-card {
+            background: var(--panel-glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: var(--border-std);
             border-radius: 12px;
-            box-shadow: 0 0 35px rgba(6, 182, 212, 0.2);
+            box-shadow: 0 0 40px rgba(6, 182, 212, 0.15);
             overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            cursor: pointer; /* Fix 1 */
         }
 
-        .terminal-card:hover {
-            border-color: var(--accent-glow);
-            box-shadow: 0 0 50px rgba(0, 240, 255, 0.35);
+        .cyber-card:hover {
+            border: var(--border-hover);
+            box-shadow: 0 0 60px rgba(0, 240, 255, 0.3);
         }
 
-        /* Header Bar */
+        /* Title Bar */
         .card-header {
-            background: rgba(2, 6, 23, 0.9);
-            padding: 14px 22px;
+            background: rgba(2, 6, 23, 0.95);
+            padding: 15px 25px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-bottom: 1px solid var(--border-glow);
+            border-bottom: 1px solid rgba(6, 182, 212, 0.3);
         }
 
-        .dots {
-            display: flex;
-            gap: 8px;
-        }
-
-        .dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            cursor: pointer;
-        }
-
-        .dot-red { background: #ef4444; box-shadow: 0 0 6px #ef4444; }
-        .dot-yellow { background: #eab308; box-shadow: 0 0 6px #eab308; }
-        .dot-green { background: #22c55e; box-shadow: 0 0 6px #22c55e; }
+        .dots { display: flex; gap: 9px; }
+        .dot { width: 13px; height: 13px; border-radius: 50%; }
+        .dot-red { background: #ff5f56; box-shadow: 0 0 8px #ff5f56; }
+        .dot-yellow { background: #ffbd2e; box-shadow: 0 0 8px #ffbd2e; }
+        .dot-green { background: #27c93f; box-shadow: 0 0 8px #27c93f; }
 
         .system-status {
             font-family: var(--font-mono);
-            font-size: 11px;
-            color: var(--accent-cyan);
+            font-size: 12px;
+            color: var(--cyber-cyan);
             letter-spacing: 1.5px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
             text-transform: uppercase;
+            display: flex; align-items: center; gap: 10px;
         }
 
-        .status-indicator {
-            width: 8px;
-            height: 8px;
-            background: var(--accent-glow);
+        .status-pulse {
+            width: 9px; height: 9px;
+            background: var(--cyber-green);
             border-radius: 50%;
-            box-shadow: 0 0 10px var(--accent-glow);
-            animation: pulse 1.2s infinite alternate;
+            box-shadow: 0 0 10px var(--cyber-green);
+            animation: statusPulse 1.5s infinite alternate;
         }
 
-        @keyframes pulse {
-            0% { opacity: 0.2; transform: scale(0.8); }
-            100% { opacity: 1; transform: scale(1.2); }
-        }
+        @keyframes statusPulse { 0% { opacity: 0.4; } 100% { opacity: 1; } }
 
         /* Card Content Body */
-        .card-body {
-            padding: 40px;
-        }
+        .card-body { padding: 45px; }
 
-        .badge {
-            display: inline-block;
-            padding: 4px 12px;
-            background: rgba(6, 182, 212, 0.15);
-            border: 1px solid var(--accent-cyan);
-            color: var(--accent-cyan);
-            font-family: var(--font-mono);
-            font-size: 12px;
-            border-radius: 20px;
-            margin-bottom: 15px;
-            letter-spacing: 1px;
-        }
-
+        /* Headline with Glitch Effect */
         .headline {
-            font-size: 2.8rem;
-            font-weight: 800;
-            color: var(--text-main);
-            margin-bottom: 12px;
-            line-height: 1.1;
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 15px;
+            line-height: 1;
+            position: relative;
         }
 
         .headline span {
-            color: var(--accent-cyan);
-            text-shadow: 0 0 15px rgba(6, 182, 212, 0.6);
+            color: var(--cyber-cyan);
+            text-shadow: 0 0 20px var(--cyber-cyan-glow);
+            position: relative;
+            display: inline-block;
         }
 
-        .typing-container {
+        /* Headline Pseudo-Glitch Layers */
+        .headline span::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            color: var(--cyber-pink);
+            opacity: 0.5;
+            z-index: -1;
+            animation: glitch1 2.5s infinite linear;
+        }
+
+        @keyframes glitch1 {
+            0% { transform: translate(1px, 1px); }
+            10% { transform: translate(-1px, -1px); }
+            20% { transform: translate(2px, -1px); }
+            30% { transform: translate(1px, 2px); }
+            40% { transform: translate(-2px, 1px); }
+            50% { transform: translate(2px, 2px); }
+            60% { transform: translate(-1px, -2px); }
+            100% { transform: translate(0, 0); }
+        }
+
+        .typewriter-box {
             font-family: var(--font-mono);
-            color: var(--accent-glow);
-            font-size: 1.15rem;
-            margin-bottom: 25px;
-            min-height: 2em;
-            display: flex;
-            align-items: center;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            min-height: 1.6em;
         }
 
-        /* Interactive Command Terminal Box */
-        .interactive-terminal {
-            background: rgba(0, 0, 0, 0.6);
+        /* Interactive Shell Terminal */
+        .cyber-shell {
+            background: rgba(0, 1, 3, 0.8);
             border: 1px solid rgba(6, 182, 212, 0.2);
             border-radius: 8px;
-            padding: 15px 20px;
+            padding: 20px;
             font-family: var(--font-mono);
-            font-size: 13px;
-            color: #22c55e;
-            margin: 25px 0;
-            max-height: 150px;
+            font-size: 14px;
+            color: var(--cyber-green);
+            margin: 30px 0;
+            max-height: 220px;
             overflow-y: auto;
+            position: relative;
         }
 
-        .cmd-line {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 8px;
-        }
-
-        .cmd-input {
+        .prompt { color: var(--text-main); font-weight: bold; margin-right: 8px; }
+        .input-line { display: flex; align-items: center; margin-top: 10px; }
+        
+        .shell-input {
             background: transparent;
             border: none;
             outline: none;
-            color: var(--text-main);
+            color: var(--cyber-green);
             font-family: var(--font-mono);
-            font-size: 13px;
-            width: 100%;
-        }
-
-        /* Feature Cards Grid */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 15px;
-            margin: 30px 0;
-        }
-
-        .feature-box {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 18px;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
-
-        .feature-box:hover {
-            background: rgba(6, 182, 212, 0.08);
-            border-color: var(--accent-cyan);
-            transform: translateY(-3px);
-        }
-
-        .feature-title {
             font-size: 14px;
-            font-weight: 700;
-            color: var(--accent-cyan);
-            margin-bottom: 6px;
-            font-family: var(--font-mono);
+            flex-grow: 1;
         }
 
-        .feature-desc {
-            font-size: 12px;
-            color: var(--text-muted);
-            line-height: 1.4;
-        }
+        .shell-input::placeholder { color: rgba(0, 255, 65, 0.3); }
 
         /* Action Buttons */
-        .action-group {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            margin-top: 10px;
-        }
+        .btn-group { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 15px; }
 
         .btn {
             font-family: var(--font-mono);
             font-size: 14px;
-            font-weight: 700;
-            padding: 12px 30px;
+            font-weight: bold;
+            padding: 14px 35px;
             border-radius: 6px;
             text-decoration: none;
             transition: all 0.3s ease;
             cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
             border: none;
         }
 
-        .btn-primary {
-            background: var(--accent-cyan);
-            color: #020617;
-            box-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+        .btn-core {
+            background: var(--cyber-cyan);
+            color: var(--bg-deep);
+            box-shadow: 0 0 25px rgba(6, 182, 212, 0.4);
         }
 
-        .btn-primary:hover {
-            background: var(--accent-glow);
-            box-shadow: 0 0 30px rgba(0, 240, 255, 0.8);
+        .btn-core:hover {
+            background: #00f0ff;
+            box-shadow: 0 0 40px rgba(0, 240, 255, 0.7);
             transform: translateY(-2px);
         }
 
-        .btn-secondary {
-            background: transparent;
-            color: var(--text-main);
-            border: 1px solid var(--border-glow);
-        }
-
-        .btn-secondary:hover {
-            border-color: var(--accent-glow);
-            color: var(--accent-glow);
-            box-shadow: 0 0 15px rgba(6, 182, 212, 0.2);
-            transform: translateY(-2px);
-        }
-
-        /* Footer Credit Bar */
+        /* Footer Credit Section */
         footer {
             position: relative;
             z-index: 2;
-            padding: 20px;
+            padding: 25px;
             text-align: center;
             font-family: var(--font-mono);
-            font-size: 12px;
+            font-size: 13px;
             color: var(--text-muted);
             width: 100%;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-            background: rgba(2, 6, 23, 0.95);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(2, 6, 23, 0.98);
         }
 
-        .credit-link {
-            color: var(--accent-cyan);
+        .credit-anchor {
+            color: var(--cyber-cyan);
             text-decoration: none;
             font-weight: bold;
-            transition: all 0.2s ease;
+            transition: all 0.2s;
         }
 
-        .credit-link:hover {
-            color: var(--accent-glow);
-            text-shadow: 0 0 10px var(--accent-glow);
+        .credit-anchor:hover {
+            color: #00f0ff;
+            text-shadow: 0 0 10px #00f0ff;
         }
 
         @media (max-width: 640px) {
-            .headline { font-size: 2rem; }
-            .card-body { padding: 25px 20px; }
-            .action-group { flex-direction: column; }
-            .btn { width: 100%; }
+            .headline { font-size: 2.2rem; }
+            .card-body { padding: 30px 20px; }
+            .btn-group { flex-direction: column; }
+            .btn { width: 100%; text-align: center; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Background Layers -->
-    <canvas id="particle-canvas"></canvas>
+    <canvas id="matrix-canvas"></canvas>
     <div class="scanlines"></div>
-    <div class="bg-grid"></div>
 
-    <!-- Main Content Container -->
     <main class="container">
-        <div class="terminal-card">
-            <!-- Terminal Title Bar -->
+        <div class="cyber-card" id="main-card">
             <div class="card-header">
                 <div class="dots">
-                    <div class="dot dot-red" title="Close Node"></div>
-                    <div class="dot dot-yellow" title="Minimize"></div>
-                    <div class="dot dot-green" title="Expand System"></div>
+                    <div class="dot dot-red"></div>
+                    <div class="dot dot-yellow"></div>
+                    <div class="dot dot-green"></div>
                 </div>
                 <div class="system-status">
-                    <span class="status-indicator"></span>
-                    CyberPulse v2.0 // Active Node
+                    <span class="status-pulse"></span>
+                    CyberPulse Core v3.0 // Active
                 </div>
             </div>
             
-            <!-- Terminal Inner Body -->
             <div class="card-body">
-                <span class="badge">SYSTEM READY</span>
-                <h1 class="headline">Welcome to <span>CyberPulse</span></h1>
+                <h1 class="headline"><span data-text="CyberPulse">CyberPulse</span></h1>
                 
-                <div class="typing-container">
-                    <span id="typewriter"></span>
+                <div class="typewriter-box">
+                    root@system:~# <span id="typewriter-text"></span>
                 </div>
 
-                <!-- Interactive Feature Cards -->
-                <div class="features-grid">
-                    <div class="feature-box">
-                        <div class="feature-title">[01] Ultra Fast</div>
-                        <div class="feature-desc">Optimized zero-dependency engine for lightning load speeds.</div>
+                <div class="cyber-shell" id="shell-container">
+                    <pre style="color: var(--cyber-cyan); margin-bottom: 10px; font-size: 12px;">
+ ______                 _____      _
+/ _____)               |  __ \    | |
+| /     _ _   _   _  __| |__) |_   | |  ___  ___
+| |    | | | | | | |/ _  |  ___/| |  | | / __|/ _ \
+| \____| | |_| |_| | (_| | |    | |__| |_\__ \  __/
+ \______)_|_____\__|____|_|     \____/|___/\___|
+                                Developed by @VexorNull
+                    </pre>
+                    <div id="shell-logs">
+                        <div>[CyberPulse Shell Initialized. Input commands or type '<b style="color:var(--cyber-cyan);">help</b>'.]</div>
                     </div>
-                    <div class="feature-box">
-                        <div class="feature-title">[02] Cyberpunk UI</div>
-                        <div class="feature-desc">Dynamic neon visual hierarchy with particle physics background.</div>
-                    </div>
-                    <div class="feature-box">
-                        <div class="feature-title">[03] Secured SLSA</div>
-                        <div class="feature-desc">Integrated cryptographic build validation workflows.</div>
-                    </div>
-                </div>
-
-                <!-- Interactive Live Terminal Command Line -->
-                <div class="interactive-terminal" id="terminal-out">
-                    <div>[CyberPulse Shell initialized. Type <b style="color:var(--accent-cyan);">help</b> or <b style="color:var(--accent-cyan);">about</b> to explore commands.]</div>
-                    <div class="cmd-line">
-                        <span>root@cyberpulse:~#</span>
-                        <input type="text" class="cmd-input" id="cmd-input" autofocus placeholder="Type command here..." autocomplete="off">
+                    <div class="input-line">
+                        <span class="prompt">root@cyberpulse:~#</span>
+                        <input type="text" id="shell-input" class="shell-input" autofocus placeholder="Await command..." autocomplete="off">
                     </div>
                 </div>
 
-                <!-- Action Buttons -->
-                <div class="action-group">
-                    <button class="btn btn-primary" onclick="playBeep(); alert('CyberPulse Core Online!');">Launch System</button>
-                    <a href="https://github.com/VexorNull" target="_blank" class="btn btn-secondary">GitHub Profile</a>
+                <div class="btn-group">
+                    <button class="btn btn-core" id="action-launch">Launch Protocol</button>
+                    <a href="https://github.com/VexorNull" target="_blank" class="btn" style="color: var(--text-muted); border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.02);">Github</a>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- Footer with Explicit Author Credits -->
     <footer>
-        <p>Engineered & Designed by <a href="https://github.com/VexorNull" class="credit-link">Tanveer Hussain @VexorNull</a> | CyberPulse Core</p>
+        <p>Engineered by <a href="https://github.com/VexorNull" class="credit-anchor">Tanveer Hussain @VexorNull</a> | CyberPulse Core v3.0</p>
     </footer>
 
-    <!-- Futuristic JavaScript Engine -->
     <script>
-        // --- 1. Interactive Particle Engine ---
-        const canvas = document.getElementById('particle-canvas');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
+        /**
+         * Project: CyberPulse v3.0
+         * Engineering Credit: Tanveer Hussain (@VexorNull)
+         * System Overview: Integrated HTML5 Shell Terminal with Matrix Rain and Audio FX.
+         */
 
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
+        const CyberPulse = (() => {
 
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2 + 0.5;
-                this.speedX = (Math.random() - 0.5) * 0.8;
-                this.speedY = (Math.random() - 0.5) * 0.8;
-                this.color = '#06b6d4';
-            }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                if (this.x > canvas.width) this.x = 0;
-                if (this.x < 0) this.x = canvas.width;
-                if (this.y > canvas.height) this.y = 0;
-                if (this.y < 0) this.y = canvas.height;
-            }
-            draw() {
-                ctx.fillStyle = this.color;
-                ctx.shadowBlur = 8;
-                ctx.shadowColor = '#00f0ff';
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
+            // --- 1. Sound Engine 2.0 (Fix 4: Optimized Key Tones) ---
+            const playSound = (freq = 800, duration = 0.08) => {
+                try {
+                    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'sine'; osc.frequency.setValueAtTime(freq, ctx.currentTime);
+                    gain.gain.setValueAtTime(0.04, ctx.currentTime);
+                    osc.connect(gain); gain.connect(ctx.destination);
+                    osc.start(); osc.stop(ctx.currentTime + duration);
+                } catch(e) {}
+            };
 
-        for (let i = 0; i < 60; i++) {
-            particles.push(new Particle());
-        }
+            // --- 2. Upgraded Matrix Background Engine ---
+            const initMatrix = () => {
+                const canvas = document.getElementById('matrix-canvas');
+                const ctx = canvas.getContext('2d');
+                let width, height, columns;
+                const chars = "0123456789ABCDEF@#$vexornull%";
+                const matrixChars = chars.split("");
+                let drops = [];
 
-        function animateParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
-            requestAnimationFrame(animateParticles);
-        }
-        animateParticles();
+                const resize = () => {
+                    width = canvas.width = window.innerWidth;
+                    height = canvas.height = window.innerHeight;
+                    columns = Math.floor(width / 20);
+                    drops = [];
+                    for(let i = 0; i < columns; i++) drops[i] = 1;
+                };
 
-        // --- 2. Typewriter Effect ---
-        const textElement = document.getElementById('typewriter');
-        const phrases = [
-            "> Initializing CyberPulse Core...",
-            "> Engineered by Tanveer Hussain...",
-            "> Identity Protocol: @VexorNull",
-            "> Ready for modern web deployment."
-        ];
-        let phraseIndex = 0, charIndex = 0, isDeleting = false;
+                const draw = () => {
+                    // Slight trail effect
+                    ctx.fillStyle = "rgba(1, 4, 9, 0.05)";
+                    ctx.fillRect(0, 0, width, height);
 
-        function typeEffect() {
-            const current = phrases[phraseIndex];
-            textElement.textContent = isDeleting ? current.substring(0, charIndex - 1) : current.substring(0, charIndex + 1);
-            charIndex += isDeleting ? -1 : 1;
+                    ctx.fillStyle = "#00ff41"; // Matrix Green
+                    ctx.font = "16px monospace";
+                    ctx.shadowBlur = 5; ctx.shadowColor = "#00ff41";
 
-            let speed = isDeleting ? 30 : 70;
-            if (!isDeleting && charIndex === current.length) {
-                speed = 2000;
-                isDeleting = true;
-            } else if (isDeleting && charIndex === 0) {
-                isDeleting = false;
-                phraseIndex = (phraseIndex + 1) % phrases.length;
-                speed = 400;
-            }
-            setTimeout(typeEffect, speed);
-        }
-        typeEffect();
+                    for(let i = 0; i < drops.length; i++) {
+                        const text = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+                        ctx.fillText(text, i * 20, drops[i] * 20);
 
-        // --- 3. Audio SFX Generator (No external files needed) ---
-        function playBeep() {
-            try {
-                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(800, audioCtx.currentTime);
-                gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                osc.start();
-                osc.stop(audioCtx.currentTime + 0.08);
-            } catch(e) {}
-        }
+                        if(drops[i] * 20 > height && Math.random() > 0.975) drops[i] = 0;
+                        drops[i]++;
+                    }
+                };
 
-        // --- 4. Interactive Live Command Input ---
-        const cmdInput = document.getElementById('cmd-input');
-        const terminalOut = document.getElementById('terminal-out');
+                window.addEventListener('resize', resize);
+                resize();
+                setInterval(draw, 35);
+            };
 
-        cmdInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-                playBeep();
-                const inputVal = cmdInput.value.trim().toLowerCase();
-                const cmdLine = document.createElement('div');
-                cmdLine.style.color = '#f3f4f6';
-                cmdLine.textContent = `root@cyberpulse:~# ${cmdInput.value}`;
-                
-                const response = document.createElement('div');
-                response.style.color = '#06b6d4';
+            // --- 3. Optimized Typewriter Effect ---
+            const initTypewriter = () => {
+                const textEl = document.getElementById('typewriter-text');
+                const phrases = [
+                    "Engineered by Tanveer Hussain...",
+                    "Identity Protocol: @VexorNull",
+                    "Loading CyberPulse v3.0 UI...",
+                    "Status: Optimal. Ready for core deployment."
+                ];
+                let pIdx = 0, cIdx = 0, isDeleting = false;
 
-                if (inputVal === 'help') {
-                    response.innerHTML = 'Available Commands: <b style="color:#fff;">about</b>, <b style="color:#fff;">author</b>, <b style="color:#fff;">clear</b>, <b style="color:#fff;">status</b>';
-                } else if (inputVal === 'about') {
-                    response.textContent = 'CyberPulse is an interactive next-gen terminal website designed by Tanveer Hussain @VexorNull.';
-                } else if (inputVal === 'author') {
-                    response.textContent = 'Creator: Tanveer Hussain (@VexorNull)';
-                } else if (inputVal === 'status') {
-                    response.textContent = 'System Core: 100% Operational | Latency: 12ms';
-                } else if (inputVal === 'clear') {
-                    terminalOut.innerHTML = '';
-                    terminalOut.appendChild(cmdLine);
-                    cmdInput.value = '';
-                    return;
-                } else if (inputVal !== '') {
-                    response.style.color = '#ef4444';
-                    response.textContent = `Command not recognized: "${inputVal}". Type "help" for options.`;
+                function type() {
+                    const current = phrases[pIdx];
+                    textEl.textContent = isDeleting ? current.substring(0, cIdx - 1) : current.substring(0, cIdx + 1);
+                    cIdx += isDeleting ? -1 : 1;
+
+                    let speed = isDeleting ? 30 : 60;
+
+                    if (!isDeleting && cIdx === current.length) {
+                        speed = 3000;
+                        isDeleting = true;
+                    } else if (isDeleting && cIdx === 0) {
+                        isDeleting = false;
+                        pIdx = (pIdx + 1) % phrases.length;
+                        speed = 500;
+                    }
+                    setTimeout(type, speed);
                 }
+                type();
+            };
 
-                terminalOut.insertBefore(cmdLine, terminalOut.lastElementChild);
-                if (inputVal !== '') {
-                    terminalOut.insertBefore(response, terminalOut.lastElementChild);
+            // --- 4. Interactive Shell Engine v3.0 (Fix 1, 3: Accessibility & History) ---
+            const initShell = () => {
+                const input = document.getElementById('shell-input');
+                const logs = document.getElementById('shell-logs');
+                const card = document.getElementById('main-card');
+                const cmdHistory = [];
+                let historyIdx = -1;
+
+                // Fix 1: Autofocus input on card click
+                card.addEventListener('click', () => {
+                    input.focus();
+                });
+
+                input.addEventListener('keydown', (e) => {
+                    playSound(1000, 0.02); // Keybeep
+
+                    // Fix 3: History navigation
+                    if (e.key === 'ArrowUp') {
+                        if (cmdHistory.length > 0 && historyIdx < cmdHistory.length - 1) {
+                            historyIdx++;
+                            input.value = cmdHistory[cmdHistory.length - 1 - historyIdx];
+                        }
+                        e.preventDefault();
+                    } else if (e.key === 'ArrowDown') {
+                        if (historyIdx > 0) {
+                            historyIdx--;
+                            input.value = cmdHistory[cmdHistory.length - 1 - historyIdx];
+                        } else {
+                            historyIdx = -1; input.value = '';
+                        }
+                        e.preventDefault();
+                    }
+
+                    if (e.key === 'Enter') {
+                        const val = input.value.trim();
+                        if(val) cmdHistory.push(val); // Save history
+                        historyIdx = -1;
+
+                        const cmdLine = document.createElement('div');
+                        cmdLine.innerHTML = `<span class="prompt">root@cyberpulse:~#</span> ${input.value}`;
+                        logs.appendChild(cmdLine);
+
+                        const response = document.createElement('div');
+                        response.style.color = "var(--cyber-cyan)";
+
+                        const cmd = val.toLowerCase();
+
+                        if (cmd === 'help') response.innerHTML = 'Cmds: <b style="color:#fff;">author</b>, <b style="color:#fff;">status</b>, <b style="color:#fff;">clear</b>, <b style="color:#fff;">exit</b>';
+                        else if (cmd === 'author') response.textContent = 'Tanveer Hussain (@VexorNull)';
+                        else if (cmd === 'status') response.textContent = 'Core: Operational | Latency: 4ms | Network: Secure';
+                        else if (cmd === 'exit') response.textContent = 'Protocol terminated. See you again, user.';
+                        else if (cmd === 'clear') { logs.innerHTML = ''; input.value = ''; return; }
+                        else if (cmd) {
+                            response.style.color = "var(--cyber-pink)";
+                            response.textContent = `Error: unknown command '${cmd}'`;
+                        }
+
+                        if(cmd) logs.appendChild(response);
+                        input.value = '';
+                        // Auto-scroll
+                        document.getElementById('shell-container').scrollTop = document.getElementById('shell-container').scrollHeight;
+                    }
+                });
+            };
+
+            return {
+                start: () => {
+                    initMatrix();
+                    initTypewriter();
+                    initShell();
+                    
+                    document.getElementById('action-launch').addEventListener('click', () => {
+                        playSound(1200, 0.1);
+                        alert('CyberPulse Core Protocol Activated by @VexorNull');
+                    });
                 }
-                
-                cmdInput.value = '';
-                terminalOut.scrollTop = terminalOut.scrollHeight;
             }
-        });
+        })();
+
+        document.addEventListener('DOMContentLoaded', CyberPulse.start);
     </script>
 </body>
 </html>
