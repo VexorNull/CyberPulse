@@ -1,13 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" prefix="og: https://ogp.me/ns#">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tanveer Hussain | CyberPulse v7.0 Kinetic Engine</title>
-
+    
+    <title>Tanveer Hussain (@VexorNull) | Finance & Web Engineering Specialist</title>
+    <meta name="title" content="Tanveer Hussain (@VexorNull) | Finance & Web Engineering Specialist">
+    <meta name="description" content="Official portfolio of Tanveer Hussain (@VexorNull). Web Engineering, Custom Blogger Architecture, Financial Auditing & Automation Specialist based in Karachi.">
+    <meta name="keywords" content="Tanveer Hussain, VexorNull, CyberPulse, Web Engineer, Blogger Architecture, Financial Auditing, Karachi, Pakistan">
     <meta name="author" content="Tanveer Hussain">
-    <meta name="designer" content="@VexorNull">
-    <meta name="credit" content="Engineered by Tanveer Hussain (@VexorNull)">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://vexornull.github.io/">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://vexornull.github.io/">
+    <meta property="og:title" content="Tanveer Hussain (@VexorNull) | CyberPulse Portfolio">
+    <meta property="og:description" content="Finance & Tech Specialist building modern web solutions and automated workflow engines.">
+    <meta property="og:image" content="https://lh3.googleusercontent.com/d/1NzqmZp796ksKZrtpuMabgqpFXTGV3YIR">
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://vexornull.github.io/">
+    <meta property="twitter:title" content="Tanveer Hussain (@VexorNull)">
+    <meta property="twitter:description" content="Finance & Tech Specialist building modern web solutions and automated workflow engines.">
+    <meta property="twitter:image" content="https://lh3.googleusercontent.com/d/1NzqmZp796ksKZrtpuMabgqpFXTGV3YIR">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Tanveer Hussain",
+      "alternateName": "VexorNull",
+      "url": "https://vexornull.github.io/",
+      "image": "https://lh3.googleusercontent.com/d/1NzqmZp796ksKZrtpuMabgqpFXTGV3YIR",
+      "jobTitle": "Finance & Web Engineering Specialist",
+      "sameAs": [
+        "https://github.com/vexornull",
+        "https://instagram.com/vexornull",
+        "https://tiktok.com/@vexornull",
+        "https://youtube.com/@vexornull",
+        "https://x.com/vexornull",
+        "https://linkedin.com/in/vexornull"
+      ]
+    }
+    </script>
 
     <style>
         :root {
@@ -20,7 +55,7 @@
             --text-main: #e6edf3;
             --text-muted: #8b949e;
             --border-line: rgba(6, 182, 212, 0.25);
-            --font-mono: 'Fira Code', 'Courier New', monospace;
+            --font-mono: 'Fira Code', monospace, Courier;
             --ease-cyber: cubic-bezier(0.19, 1, 0.22, 1);
         }
 
@@ -39,7 +74,6 @@
             position: relative;
         }
 
-        /* Ambient Glitch Text Animation Keyframes */
         @keyframes glitch {
             0% { text-shadow: 0.5px 0 0 var(--accent-pink), -0.5px 0 0 var(--accent-cyan); }
             4% { text-shadow: 0.5px 0 0 var(--accent-pink), -0.5px 0 0 var(--accent-cyan); }
@@ -47,19 +81,16 @@
             100% { text-shadow: -0.5px 0 0 var(--accent-pink), 0.5px 0 0 var(--accent-cyan); }
         }
 
-        /* Status Badge Pulse Keyframes */
         @keyframes badgePulse {
             0% { box-shadow: 0 0 10px rgba(6, 182, 212, 0.3); border-color: rgba(6, 182, 212, 0.3); }
             100% { box-shadow: 0 0 25px rgba(6, 182, 212, 0.7); border-color: var(--accent-cyan); }
         }
 
-        /* Matrix Background Canvas */
         #matrix-canvas {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: 0; pointer-events: none; opacity: 0.18;
         }
 
-        /* Global Slide-In Animation for Sections */
         .kinetic-section {
             opacity: 0;
             transform: translateY(20px);
@@ -77,7 +108,6 @@
             margin: 60px 0;
         }
 
-        /* Hero Header Section */
         .hero {
             text-align: center;
             margin-bottom: 40px;
@@ -135,7 +165,6 @@
             display: inline-block;
         }
 
-        /* Glitch Animation Applied to Name */
         .hero h1 span {
             color: var(--accent-cyan);
             animation: glitch 3s infinite;
@@ -147,7 +176,6 @@
             margin: 0 auto; line-height: 1.6;
         }
 
-        /* Section Title Header */
         .section-title {
             font-family: var(--font-mono); font-size: 13px;
             color: var(--accent-cyan); text-transform: uppercase;
@@ -160,7 +188,6 @@
             background: var(--border-line);
         }
 
-        /* Social Media Kinetic Grid */
         .social-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
@@ -188,7 +215,6 @@
         .social-name { font-size: 14px; font-weight: bold; }
         .social-handle { font-size: 11px; color: var(--accent-cyan); }
 
-        /* Terminal Console Box */
         .terminal-box {
             background: rgba(1, 4, 9, 0.8);
             border: 1px solid var(--border-line);
@@ -204,7 +230,6 @@
         .dot-yellow { background: #f59e0b; }
         .dot-green { background: #10b981; }
 
-        /* Skill Bar System (Kinetic on Scroll) */
         .skills-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -235,11 +260,10 @@
             background: var(--accent-cyan);
             box-shadow: 0 0 12px var(--accent-glow);
             border-radius: 4px;
-            width: 0; /* Start at 0 for kinetic fill */
+            width: 0;
             transition: width 1.2s var(--ease-cyber);
         }
 
-        /* Core Stack Grid */
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -275,7 +299,6 @@
             color: var(--accent-cyan);
         }
 
-        /* Kinetic Primary Button */
         .actions {
             display: flex; justify-content: center;
             gap: 18px; flex-wrap: wrap; margin-top: 25px;
@@ -340,11 +363,11 @@
     <main class="container">
         <section class="hero kinetic-section">
             <div class="profile-container">
-                <img src="https://lh3.googleusercontent.com/d/1NzqmZp796ksKZrtpuMabgqpFXTGV3YIR" alt="Tanveer Hussain" class="profile-img">
+                <img id="user-profile-img" src="https://lh3.googleusercontent.com/d/1NzqmZp796ksKZrtpuMabgqpFXTGV3YIR" alt="Tanveer Hussain Profile Picture" class="profile-img" onerror="handleImageError(this)">
             </div>
             <br>
             <div class="status-badge">
-                <span class="status-dot"></span> KINETIC CORE V7.0 ACTIVE
+                <span class="status-dot"></span> KINETIC CORE V8.0 SEO ACTIVE
             </div>
             <h1>Tanveer Hussain <span>@VexorNull</span></h1>
             <p>Finance & Tech Specialist building modern web solutions, custom blogger engines, and automated data workflows under the <strong>CyberPulse</strong> framework.</p>
@@ -352,27 +375,27 @@
 
         <div class="section-title kinetic-section">// Connect Across Networks</div>
         <div class="social-grid kinetic-section">
-            <a href="https://github.com/vexornull" target="_blank" class="social-card">
+            <a href="https://github.com/vexornull" target="_blank" rel="noopener noreferrer" class="social-card" aria-label="GitHub Profile">
                 <span class="social-name">GitHub</span>
                 <span class="social-handle">@vexornull</span>
             </a>
-            <a href="https://instagram.com/vexornull" target="_blank" class="social-card">
+            <a href="https://instagram.com/vexornull" target="_blank" rel="noopener noreferrer" class="social-card" aria-label="Instagram Profile">
                 <span class="social-name">Instagram</span>
                 <span class="social-handle">@vexornull</span>
             </a>
-            <a href="https://tiktok.com/@vexornull" target="_blank" class="social-card">
+            <a href="https://tiktok.com/@vexornull" target="_blank" rel="noopener noreferrer" class="social-card" aria-label="TikTok Profile">
                 <span class="social-name">TikTok</span>
                 <span class="social-handle">@vexornull</span>
             </a>
-            <a href="https://youtube.com/@vexornull" target="_blank" class="social-card">
+            <a href="https://youtube.com/@vexornull" target="_blank" rel="noopener noreferrer" class="social-card" aria-label="YouTube Channel">
                 <span class="social-name">YouTube</span>
                 <span class="social-handle">@vexornull</span>
             </a>
-            <a href="https://x.com/vexornull" target="_blank" class="social-card">
+            <a href="https://x.com/vexornull" target="_blank" rel="noopener noreferrer" class="social-card" aria-label="X Twitter Profile">
                 <span class="social-name">X (Twitter)</span>
                 <span class="social-handle">@vexornull</span>
             </a>
-            <a href="https://linkedin.com/in/vexornull" target="_blank" class="social-card">
+            <a href="https://linkedin.com/in/vexornull" target="_blank" rel="noopener noreferrer" class="social-card" aria-label="LinkedIn Profile">
                 <span class="social-name">LinkedIn</span>
                 <span class="social-handle">@vexornull</span>
             </a>
@@ -427,25 +450,24 @@
         </div>
 
         <div class="actions kinetic-section">
-            <a href="https://github.com/vexornull" target="_blank" class="btn btn-primary">Visit GitHub Profile</a>
+            <a href="https://github.com/vexornull" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Visit GitHub Profile</a>
             <a href="mailto:official.tanveer.70@gmail.com" class="btn btn-secondary">Get In Touch</a>
         </div>
     </main>
 
     <footer class="kinetic-section">
-        <p>Engineered by <a href="https://github.com/vexornull" class="credit-link">Tanveer Hussain @VexorNull</a> | CyberPulse Engine v7.0</p>
+        <p>Engineered by <a href="https://github.com/vexornull" class="credit-link" target="_blank" rel="noopener noreferrer">Tanveer Hussain @VexorNull</a> | CyberPulse Engine v8.0</p>
     </footer>
 
     <script>
-        /**
-         * Project: CyberPulse v7.0 Kinetic Engine
-         * Architect: Tanveer Hussain (@VexorNull)
-         * System Overview: Dynamic animations, Matrix canvas, Scroll-triggered proficiency bars.
-         */
+        // Drive Image Fallback Patch Fix
+        function handleImageError(img) {
+            img.onerror = null;
+            img.src = 'https://drive.google.com/uc?export=view&id=1NzqmZp796ksKZrtpuMabgqpFXTGV3YIR';
+        }
 
         const CyberPulse = (() => {
 
-            // --- 1. Upgraded Matrix Background ---
             const initMatrix = () => {
                 const canvas = document.getElementById('matrix-canvas');
                 const ctx = canvas.getContext('2d');
@@ -479,13 +501,12 @@
                 setInterval(draw, 35);
             };
 
-            // --- 2. Kinetic Typewriter Terminal ---
             const initTypewriter = () => {
                 const lines = [
-                    "Initializing CyberPulse Engine v7.0...",
-                    "Kinetic Core: Online. Glitch Text: Active.",
-                    "Connected Networks: GitHub, Instagram, TikTok...",
-                    "Ready for modern Web & Data deployment."
+                    "Initializing CyberPulse Engine v8.0...",
+                    "Advanced Level Technical SEO Configured.",
+                    "JSON-LD Schema & OpenGraph Meta Active.",
+                    "Ready for Search Engine Indexing & Speed Optimization."
                 ];
                 let lineIdx = 0, charIdx = 0, isDeleting = false;
                 const target = document.getElementById('terminal-text');
@@ -506,14 +527,12 @@
                 type();
             };
 
-            // --- 3. Kinetic Scroll and Skill Bar Animations ---
             const initScrollEffects = () => {
                 const sections = document.querySelectorAll('.kinetic-section');
                 const skillBars = document.querySelectorAll('.progress-fill');
 
                 const options = { threshold: 0.25 };
 
-                // Section Slide-In Observer
                 const sectionObserver = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
                         if (entry.isIntersecting) {
@@ -525,7 +544,6 @@
 
                 sections.forEach(section => sectionObserver.observe(section));
 
-                // Skill Bar Fill Observer
                 const skillObserver = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
                         if (entry.isIntersecting) {
