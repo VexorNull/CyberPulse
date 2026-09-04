@@ -3,27 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CyberPulse v3.0 // Tanveer Hussain @VexorNull Protocol</title>
+    <title>CyberPulse v4.0 // Tanveer Hussain @VexorNull Protocol</title>
     
     <meta name="author" content="Tanveer Hussain">
     <meta name="copyright" content="Tanveer Hussain (@VexorNull)">
     <meta name="designer" content="@VexorNull">
-    <meta name="credit" content="Architected & Engineered by Tanveer Hussain (@VexorNull)">
-    <meta name="description" content="CyberPulse: A high-performance, interactive cyberpunk terminal portfolio. Designed by @VexorNull.">
+    <meta name="credit" content="Engineered by Tanveer Hussain (@VexorNull)">
+    <meta name="description" content="CyberPulse v4.0: Next-Gen Interactive Cyberpunk Operating Terminal & Engine.">
 
     <style>
         :root {
             --bg-deep: #010409;
-            --cyber-cyan: #06b6d4;
-            --cyber-cyan-glow: rgba(6, 182, 212, 0.6);
-            --cyber-pink: #f43f5e;
-            --cyber-green: #00ff41;
+            --accent-main: #06b6d4;
+            --accent-glow: rgba(6, 182, 212, 0.6);
+            --accent-pink: #f43f5e;
+            --accent-green: #00ff41;
             --text-main: #e2e8f0;
             --text-muted: #94a3b8;
-            --panel-glass: rgba(10, 15, 25, 0.9);
-            --border-std: 1px solid rgba(6, 182, 212, 0.4);
-            --border-hover: 1px solid rgba(0, 240, 255, 0.8);
+            --panel-glass: rgba(8, 12, 22, 0.92);
+            --border-std: 1px solid rgba(6, 182, 212, 0.35);
             --font-mono: 'Fira Code', 'Courier New', Courier, monospace;
+        }
+
+        /* Live Color Themes */
+        body.theme-matrix {
+            --accent-main: #00ff41;
+            --accent-glow: rgba(0, 255, 65, 0.6);
+        }
+        body.theme-pink {
+            --accent-main: #f43f5e;
+            --accent-glow: rgba(244, 63, 94, 0.6);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -39,153 +48,161 @@
             justify-content: space-between;
             overflow-x: hidden;
             position: relative;
+            transition: background 0.5s ease;
         }
 
-        /* Upgrade 2: Matrix Digital Rain Background */
+        /* Reactive Matrix Rain Canvas */
         #matrix-canvas {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
             z-index: 0;
             pointer-events: none;
-            opacity: 0.15;
+            opacity: 0.18;
         }
 
-        /* Ambient Glow & Scanlines */
+        /* Scanline Overlay */
         .scanlines {
             position: fixed;
             top: 0; left: 0;
             width: 100vw; height: 100vh;
-            background: linear-gradient(rgba(18,16,16,0) 50%, rgba(0,0,0,0.2) 50%);
+            background: linear-gradient(rgba(18,16,16,0) 50%, rgba(0,0,0,0.25) 50%);
             background-size: 100% 3px;
-            z-index: 1; pointer-events: none; opacity: 0.8;
+            z-index: 1; pointer-events: none; opacity: 0.7;
         }
 
-        /* Main Glass Container */
         .container {
             position: relative;
             z-index: 2;
             width: 94%;
-            max-width: 980px;
-            margin: 50px 0;
+            max-width: 1000px;
+            margin: 40px 0;
         }
 
-        /* Terminal Card (Glassmorphic) */
         .cyber-card {
             background: var(--panel-glass);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: var(--border-std);
             border-radius: 12px;
-            box-shadow: 0 0 40px rgba(6, 182, 212, 0.15);
+            box-shadow: 0 0 45px rgba(0, 0, 0, 0.8);
             overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-            cursor: pointer; /* Fix 1 */
+            transition: border 0.3s ease, box-shadow 0.3s ease;
         }
 
         .cyber-card:hover {
-            border: var(--border-hover);
-            box-shadow: 0 0 60px rgba(0, 240, 255, 0.3);
+            border-color: var(--accent-main);
+            box-shadow: 0 0 50px var(--accent-glow);
         }
 
-        /* Title Bar */
+        /* Card Header Controls */
         .card-header {
             background: rgba(2, 6, 23, 0.95);
-            padding: 15px 25px;
+            padding: 14px 22px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-bottom: 1px solid rgba(6, 182, 212, 0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
 
-        .dots { display: flex; gap: 9px; }
-        .dot { width: 13px; height: 13px; border-radius: 50%; }
-        .dot-red { background: #ff5f56; box-shadow: 0 0 8px #ff5f56; }
-        .dot-yellow { background: #ffbd2e; box-shadow: 0 0 8px #ffbd2e; }
-        .dot-green { background: #27c93f; box-shadow: 0 0 8px #27c93f; }
+        .header-controls { display: flex; align-items: center; gap: 12px; }
+        .dots { display: flex; gap: 8px; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; }
+        .dot-red { background: #ff5f56; }
+        .dot-yellow { background: #ffbd2e; }
+        .dot-green { background: #27c93f; }
+
+        .audio-btn {
+            background: transparent;
+            border: 1px solid var(--accent-main);
+            color: var(--accent-main);
+            padding: 3px 10px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .audio-btn:hover {
+            background: var(--accent-main);
+            color: var(--bg-deep);
+        }
 
         .system-status {
             font-family: var(--font-mono);
-            font-size: 12px;
-            color: var(--cyber-cyan);
+            font-size: 11px;
+            color: var(--accent-main);
             letter-spacing: 1.5px;
             text-transform: uppercase;
-            display: flex; align-items: center; gap: 10px;
+            display: flex; align-items: center; gap: 8px;
         }
 
         .status-pulse {
-            width: 9px; height: 9px;
-            background: var(--cyber-green);
+            width: 8px; height: 8px;
+            background: var(--accent-green);
             border-radius: 50%;
-            box-shadow: 0 0 10px var(--cyber-green);
-            animation: statusPulse 1.5s infinite alternate;
+            box-shadow: 0 0 8px var(--accent-green);
+            animation: pulse 1.5s infinite alternate;
         }
 
-        @keyframes statusPulse { 0% { opacity: 0.4; } 100% { opacity: 1; } }
+        @keyframes pulse { 0% { opacity: 0.3; } 100% { opacity: 1; } }
 
-        /* Card Content Body */
-        .card-body { padding: 45px; }
+        /* Content Body */
+        .card-body { padding: 40px; }
 
-        /* Headline with Glitch Effect */
         .headline {
             font-size: 3rem;
             font-weight: 900;
             margin-bottom: 15px;
             line-height: 1;
-            position: relative;
         }
 
         .headline span {
-            color: var(--cyber-cyan);
-            text-shadow: 0 0 20px var(--cyber-cyan-glow);
-            position: relative;
-            display: inline-block;
+            color: var(--accent-main);
+            text-shadow: 0 0 20px var(--accent-glow);
+            transition: color 0.3s ease;
         }
 
-        /* Headline Pseudo-Glitch Layers */
-        .headline span::after {
-            content: attr(data-text);
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            color: var(--cyber-pink);
-            opacity: 0.5;
-            z-index: -1;
-            animation: glitch1 2.5s infinite linear;
+        /* Real-Time Metrics Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin: 20px 0;
+            font-family: var(--font-mono);
         }
 
-        @keyframes glitch1 {
-            0% { transform: translate(1px, 1px); }
-            10% { transform: translate(-1px, -1px); }
-            20% { transform: translate(2px, -1px); }
-            30% { transform: translate(1px, 2px); }
-            40% { transform: translate(-2px, 1px); }
-            50% { transform: translate(2px, 2px); }
-            60% { transform: translate(-1px, -2px); }
-            100% { transform: translate(0, 0); }
+        .metric-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 12px;
+            border-radius: 6px;
         }
+
+        .metric-label { font-size: 10px; color: var(--text-muted); text-transform: uppercase; }
+        .metric-value { font-size: 16px; color: var(--accent-main); font-weight: bold; margin-top: 4px; }
 
         .typewriter-box {
             font-family: var(--font-mono);
             color: var(--text-muted);
-            font-size: 1.1rem;
-            margin-bottom: 30px;
-            min-height: 1.6em;
+            font-size: 1rem;
+            margin-bottom: 25px;
+            min-height: 1.5em;
         }
 
-        /* Interactive Shell Terminal */
+        /* Cyber Shell Terminal */
         .cyber-shell {
-            background: rgba(0, 1, 3, 0.8);
-            border: 1px solid rgba(6, 182, 212, 0.2);
+            background: rgba(0, 2, 6, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 8px;
             padding: 20px;
             font-family: var(--font-mono);
-            font-size: 14px;
-            color: var(--cyber-green);
-            margin: 30px 0;
-            max-height: 220px;
+            font-size: 13px;
+            color: var(--accent-green);
+            margin: 25px 0;
+            max-height: 240px;
             overflow-y: auto;
-            position: relative;
         }
 
         .prompt { color: var(--text-main); font-weight: bold; margin-right: 8px; }
@@ -195,22 +212,20 @@
             background: transparent;
             border: none;
             outline: none;
-            color: var(--cyber-green);
+            color: var(--accent-green);
             font-family: var(--font-mono);
-            font-size: 14px;
+            font-size: 13px;
             flex-grow: 1;
         }
 
-        .shell-input::placeholder { color: rgba(0, 255, 65, 0.3); }
-
         /* Action Buttons */
-        .btn-group { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 15px; }
+        .btn-group { display: flex; gap: 15px; flex-wrap: wrap; margin-top: 20px; }
 
         .btn {
             font-family: var(--font-mono);
-            font-size: 14px;
+            font-size: 13px;
             font-weight: bold;
-            padding: 14px 35px;
+            padding: 12px 30px;
             border-radius: 6px;
             text-decoration: none;
             transition: all 0.3s ease;
@@ -218,47 +233,54 @@
             border: none;
         }
 
-        .btn-core {
-            background: var(--cyber-cyan);
+        .btn-primary {
+            background: var(--accent-main);
             color: var(--bg-deep);
-            box-shadow: 0 0 25px rgba(6, 182, 212, 0.4);
+            box-shadow: 0 0 20px var(--accent-glow);
         }
 
-        .btn-core:hover {
-            background: #00f0ff;
-            box-shadow: 0 0 40px rgba(0, 240, 255, 0.7);
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-main);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent-main);
+            color: var(--accent-main);
             transform: translateY(-2px);
         }
 
-        /* Footer Credit Section */
+        /* Footer */
         footer {
             position: relative;
             z-index: 2;
-            padding: 25px;
+            padding: 20px;
             text-align: center;
             font-family: var(--font-mono);
-            font-size: 13px;
+            font-size: 12px;
             color: var(--text-muted);
             width: 100%;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
-            background: rgba(2, 6, 23, 0.98);
+            background: rgba(2, 6, 23, 0.95);
         }
 
-        .credit-anchor {
-            color: var(--cyber-cyan);
+        .credit-link {
+            color: var(--accent-main);
             text-decoration: none;
             font-weight: bold;
-            transition: all 0.2s;
         }
 
-        .credit-anchor:hover {
-            color: #00f0ff;
-            text-shadow: 0 0 10px #00f0ff;
-        }
+        .credit-link:hover { text-shadow: 0 0 8px var(--accent-glow); }
 
         @media (max-width: 640px) {
             .headline { font-size: 2.2rem; }
-            .card-body { padding: 30px 20px; }
+            .card-body { padding: 25px 18px; }
             .btn-group { flex-direction: column; }
             .btn { width: 100%; text-align: center; }
         }
@@ -272,228 +294,251 @@
     <main class="container">
         <div class="cyber-card" id="main-card">
             <div class="card-header">
-                <div class="dots">
-                    <div class="dot dot-red"></div>
-                    <div class="dot dot-yellow"></div>
-                    <div class="dot dot-green"></div>
+                <div class="header-controls">
+                    <div class="dots">
+                        <div class="dot dot-red"></div>
+                        <div class="dot dot-yellow"></div>
+                        <div class="dot dot-green"></div>
+                    </div>
+                    <button class="audio-btn" id="audio-toggle">SFX: ON</button>
                 </div>
                 <div class="system-status">
                     <span class="status-pulse"></span>
-                    CyberPulse Core v3.0 // Active
+                    CyberPulse v4.0 // HyperDrive
                 </div>
             </div>
             
             <div class="card-body">
-                <h1 class="headline"><span data-text="CyberPulse">CyberPulse</span></h1>
+                <h1 class="headline"><span>CyberPulse</span></h1>
                 
                 <div class="typewriter-box">
                     root@system:~# <span id="typewriter-text"></span>
                 </div>
 
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-label">System Clock</div>
+                        <div class="metric-value" id="clock-val">00:00:00</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Node Latency</div>
+                        <div class="metric-value" id="latency-val">8ms</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Architect</div>
+                        <div class="metric-value" style="font-size: 13px;">@VexorNull</div>
+                    </div>
+                </div>
+
                 <div class="cyber-shell" id="shell-container">
-                    <pre style="color: var(--cyber-cyan); margin-bottom: 10px; font-size: 12px;">
- ______                 _____      _
-/ _____)               |  __ \    | |
-| /     _ _   _   _  __| |__) |_   | |  ___  ___
-| |    | | | | | | |/ _  |  ___/| |  | | / __|/ _ \
-| \____| | |_| |_| | (_| | |    | |__| |_\__ \  __/
- \______)_|_____\__|____|_|     \____/|___/\___|
-                                Developed by @VexorNull
-                    </pre>
                     <div id="shell-logs">
-                        <div>[CyberPulse Shell Initialized. Input commands or type '<b style="color:var(--cyber-cyan);">help</b>'.]</div>
+                        <div>[CyberPulse v4.0 Engine Loaded. Type '<b style="color:var(--accent-main);">help</b>' or '<b style="color:var(--accent-main);">theme</b>']</div>
                     </div>
                     <div class="input-line">
                         <span class="prompt">root@cyberpulse:~#</span>
-                        <input type="text" id="shell-input" class="shell-input" autofocus placeholder="Await command..." autocomplete="off">
+                        <input type="text" id="shell-input" class="shell-input" autofocus placeholder="Type command..." autocomplete="off">
                     </div>
                 </div>
 
                 <div class="btn-group">
-                    <button class="btn btn-core" id="action-launch">Launch Protocol</button>
-                    <a href="https://github.com/VexorNull" target="_blank" class="btn" style="color: var(--text-muted); border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.02);">Github</a>
+                    <button class="btn btn-primary" id="btn-execute">Execute Node</button>
+                    <a href="https://github.com/VexorNull" target="_blank" class="btn btn-secondary">GitHub Profile</a>
                 </div>
             </div>
         </div>
     </main>
 
     <footer>
-        <p>Engineered by <a href="https://github.com/VexorNull" class="credit-anchor">Tanveer Hussain @VexorNull</a> | CyberPulse Core v3.0</p>
+        <p>Engineered & Maintained by <a href="https://github.com/VexorNull" class="credit-link">Tanveer Hussain @VexorNull</a> | CyberPulse v4.0</p>
     </footer>
 
     <script>
-        /**
-         * Project: CyberPulse v3.0
-         * Engineering Credit: Tanveer Hussain (@VexorNull)
-         * System Overview: Integrated HTML5 Shell Terminal with Matrix Rain and Audio FX.
-         */
+        const CyberEngine = (() => {
+            let audioMuted = false;
 
-        const CyberPulse = (() => {
-
-            // --- 1. Sound Engine 2.0 (Fix 4: Optimized Key Tones) ---
-            const playSound = (freq = 800, duration = 0.08) => {
+            const playSound = (freq = 800, duration = 0.05) => {
+                if (audioMuted) return;
                 try {
                     const ctx = new (window.AudioContext || window.webkitAudioContext)();
                     const osc = ctx.createOscillator();
                     const gain = ctx.createGain();
-                    osc.type = 'sine'; osc.frequency.setValueAtTime(freq, ctx.currentTime);
-                    gain.gain.setValueAtTime(0.04, ctx.currentTime);
-                    osc.connect(gain); gain.connect(ctx.destination);
-                    osc.start(); osc.stop(ctx.currentTime + duration);
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(freq, ctx.currentTime);
+                    gain.gain.setValueAtTime(0.03, ctx.currentTime);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start();
+                    osc.stop(ctx.currentTime + duration);
                 } catch(e) {}
             };
 
-            // --- 2. Upgraded Matrix Background Engine ---
-            const initMatrix = () => {
+            const initClockAndMetrics = () => {
+                const clockEl = document.getElementById('clock-val');
+                const latencyEl = document.getElementById('latency-val');
+
+                setInterval(() => {
+                    const now = new Date();
+                    clockEl.textContent = now.toTimeString().split(' ')[0];
+                }, 1000);
+
+                setInterval(() => {
+                    const randLatency = Math.floor(Math.random() * 8) + 4;
+                    latencyEl.textContent = `${randLatency}ms`;
+                }, 3000);
+            };
+
+            const initMatrixRain = () => {
                 const canvas = document.getElementById('matrix-canvas');
                 const ctx = canvas.getContext('2d');
-                let width, height, columns;
-                const chars = "0123456789ABCDEF@#$vexornull%";
-                const matrixChars = chars.split("");
-                let drops = [];
+                let width, height, columns, drops = [];
+                const chars = "01VEXORNULL";
 
                 const resize = () => {
                     width = canvas.width = window.innerWidth;
                     height = canvas.height = window.innerHeight;
-                    columns = Math.floor(width / 20);
-                    drops = [];
-                    for(let i = 0; i < columns; i++) drops[i] = 1;
+                    columns = Math.floor(width / 18);
+                    drops = Array(columns).fill(1);
                 };
 
                 const draw = () => {
-                    // Slight trail effect
-                    ctx.fillStyle = "rgba(1, 4, 9, 0.05)";
+                    ctx.fillStyle = "rgba(1, 4, 9, 0.06)";
                     ctx.fillRect(0, 0, width, height);
+                    ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--accent-main').trim() || "#06b6d4";
+                    ctx.font = "14px monospace";
 
-                    ctx.fillStyle = "#00ff41"; // Matrix Green
-                    ctx.font = "16px monospace";
-                    ctx.shadowBlur = 5; ctx.shadowColor = "#00ff41";
-
-                    for(let i = 0; i < drops.length; i++) {
-                        const text = matrixChars[Math.floor(Math.random() * matrixChars.length)];
-                        ctx.fillText(text, i * 20, drops[i] * 20);
-
-                        if(drops[i] * 20 > height && Math.random() > 0.975) drops[i] = 0;
+                    drops.forEach((y, i) => {
+                        const text = chars[Math.floor(Math.random() * chars.length)];
+                        ctx.fillText(text, i * 18, y * 18);
+                        if (y * 18 > height && Math.random() > 0.975) drops[i] = 0;
                         drops[i]++;
-                    }
+                    });
                 };
 
                 window.addEventListener('resize', resize);
                 resize();
-                setInterval(draw, 35);
+                setInterval(draw, 33);
             };
 
-            // --- 3. Optimized Typewriter Effect ---
             const initTypewriter = () => {
-                const textEl = document.getElementById('typewriter-text');
-                const phrases = [
+                const el = document.getElementById('typewriter-text');
+                const lines = [
                     "Engineered by Tanveer Hussain...",
-                    "Identity Protocol: @VexorNull",
-                    "Loading CyberPulse v3.0 UI...",
-                    "Status: Optimal. Ready for core deployment."
+                    "Protocol Reference: @VexorNull",
+                    "Core Version 4.0 Active.",
+                    "Type 'theme' in shell to switch accents."
                 ];
-                let pIdx = 0, cIdx = 0, isDeleting = false;
+                let lIdx = 0, cIdx = 0, isDeleting = false;
 
-                function type() {
-                    const current = phrases[pIdx];
-                    textEl.textContent = isDeleting ? current.substring(0, cIdx - 1) : current.substring(0, cIdx + 1);
+                const step = () => {
+                    const current = lines[lIdx];
+                    el.textContent = isDeleting ? current.substring(0, cIdx - 1) : current.substring(0, cIdx + 1);
                     cIdx += isDeleting ? -1 : 1;
 
-                    let speed = isDeleting ? 30 : 60;
+                    let speed = isDeleting ? 25 : 55;
+                    if (!isDeleting && cIdx === current.length) { speed = 2500; isDeleting = true; }
+                    else if (isDeleting && cIdx === 0) { isDeleting = false; lIdx = (lIdx + 1) % lines.length; speed = 400; }
 
-                    if (!isDeleting && cIdx === current.length) {
-                        speed = 3000;
-                        isDeleting = true;
-                    } else if (isDeleting && cIdx === 0) {
-                        isDeleting = false;
-                        pIdx = (pIdx + 1) % phrases.length;
-                        speed = 500;
-                    }
-                    setTimeout(type, speed);
-                }
-                type();
+                    setTimeout(step, speed);
+                };
+                step();
             };
 
-            // --- 4. Interactive Shell Engine v3.0 (Fix 1, 3: Accessibility & History) ---
             const initShell = () => {
                 const input = document.getElementById('shell-input');
                 const logs = document.getElementById('shell-logs');
                 const card = document.getElementById('main-card');
-                const cmdHistory = [];
-                let historyIdx = -1;
+                const history = [];
+                let hIdx = -1;
 
-                // Fix 1: Autofocus input on card click
-                card.addEventListener('click', () => {
-                    input.focus();
-                });
+                card.addEventListener('click', () => input.focus());
 
                 input.addEventListener('keydown', (e) => {
-                    playSound(1000, 0.02); // Keybeep
+                    playSound(900, 0.02);
 
-                    // Fix 3: History navigation
                     if (e.key === 'ArrowUp') {
-                        if (cmdHistory.length > 0 && historyIdx < cmdHistory.length - 1) {
-                            historyIdx++;
-                            input.value = cmdHistory[cmdHistory.length - 1 - historyIdx];
+                        if (history.length && hIdx < history.length - 1) {
+                            hIdx++;
+                            input.value = history[history.length - 1 - hIdx];
                         }
                         e.preventDefault();
                     } else if (e.key === 'ArrowDown') {
-                        if (historyIdx > 0) {
-                            historyIdx--;
-                            input.value = cmdHistory[cmdHistory.length - 1 - historyIdx];
-                        } else {
-                            historyIdx = -1; input.value = '';
-                        }
+                        if (hIdx > 0) {
+                            hIdx--;
+                            input.value = history[history.length - 1 - hIdx];
+                        } else { hIdx = -1; input.value = ''; }
                         e.preventDefault();
                     }
 
                     if (e.key === 'Enter') {
                         const val = input.value.trim();
-                        if(val) cmdHistory.push(val); // Save history
-                        historyIdx = -1;
+                        if (val) history.push(val);
+                        hIdx = -1;
 
                         const cmdLine = document.createElement('div');
                         cmdLine.innerHTML = `<span class="prompt">root@cyberpulse:~#</span> ${input.value}`;
                         logs.appendChild(cmdLine);
 
-                        const response = document.createElement('div');
-                        response.style.color = "var(--cyber-cyan)";
-
+                        const res = document.createElement('div');
+                        res.style.color = "var(--accent-main)";
                         const cmd = val.toLowerCase();
 
-                        if (cmd === 'help') response.innerHTML = 'Cmds: <b style="color:#fff;">author</b>, <b style="color:#fff;">status</b>, <b style="color:#fff;">clear</b>, <b style="color:#fff;">exit</b>';
-                        else if (cmd === 'author') response.textContent = 'Tanveer Hussain (@VexorNull)';
-                        else if (cmd === 'status') response.textContent = 'Core: Operational | Latency: 4ms | Network: Secure';
-                        else if (cmd === 'exit') response.textContent = 'Protocol terminated. See you again, user.';
-                        else if (cmd === 'clear') { logs.innerHTML = ''; input.value = ''; return; }
-                        else if (cmd) {
-                            response.style.color = "var(--cyber-pink)";
-                            response.textContent = `Error: unknown command '${cmd}'`;
+                        if (cmd === 'help') {
+                            res.innerHTML = 'Cmds: <b style="color:#fff;">author</b>, <b style="color:#fff;">theme</b>, <b style="color:#fff;">repo</b>, <b style="color:#fff;">clear</b>';
+                        } else if (cmd === 'author') {
+                            res.textContent = 'Tanveer Hussain (@VexorNull)';
+                        } else if (cmd === 'repo') {
+                            res.textContent = 'Redirecting to https://github.com/VexorNull...';
+                            window.open('https://github.com/VexorNull', '_blank');
+                        } else if (cmd === 'theme') {
+                            if (document.body.classList.contains('theme-matrix')) {
+                                document.body.className = 'theme-pink';
+                                res.textContent = 'Theme set to Neon Pink.';
+                            } else if (document.body.classList.contains('theme-pink')) {
+                                document.body.className = '';
+                                res.textContent = 'Theme set to Cyber Cyan.';
+                            } else {
+                                document.body.className = 'theme-matrix';
+                                res.textContent = 'Theme set to Matrix Green.';
+                            }
+                        } else if (cmd === 'clear') {
+                            logs.innerHTML = '';
+                            input.value = '';
+                            return;
+                        } else if (cmd) {
+                            res.style.color = "var(--accent-pink)";
+                            res.textContent = `Unknown command: '${cmd}'. Type 'help'.`;
                         }
 
-                        if(cmd) logs.appendChild(response);
+                        if (cmd) logs.appendChild(res);
                         input.value = '';
-                        // Auto-scroll
                         document.getElementById('shell-container').scrollTop = document.getElementById('shell-container').scrollHeight;
                     }
                 });
             };
 
             return {
-                start: () => {
-                    initMatrix();
+                init: () => {
+                    initClockAndMetrics();
+                    initMatrixRain();
                     initTypewriter();
                     initShell();
-                    
-                    document.getElementById('action-launch').addEventListener('click', () => {
-                        playSound(1200, 0.1);
-                        alert('CyberPulse Core Protocol Activated by @VexorNull');
+
+                    const audioBtn = document.getElementById('audio-toggle');
+                    audioBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        audioMuted = !audioMuted;
+                        audioBtn.textContent = audioMuted ? "SFX: OFF" : "SFX: ON";
+                    });
+
+                    document.getElementById('btn-execute').addEventListener('click', () => {
+                        playSound(1100, 0.1);
+                        alert('CyberPulse v4.0 Node Executed by @VexorNull');
                     });
                 }
-            }
+            };
         })();
 
-        document.addEventListener('DOMContentLoaded', CyberPulse.start);
+        document.addEventListener('DOMContentLoaded', CyberEngine.init);
     </script>
 </body>
 </html>
